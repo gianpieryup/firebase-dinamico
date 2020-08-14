@@ -1,5 +1,13 @@
 # Firebase dinámico
 
+### URL
+
+````
+https://fir-express-e72b7.web.app
+````
+
+
+
 #### Conectar al hosting
 
 ````
@@ -115,7 +123,41 @@ firebase serve --only functions,hosting
 ````
 
 
+### Deploy
+````shell
+firebase deploy
+````
 
+# Error al Deploy
+Segun Google si quieres usar `{"node": "10"}` te pide que te cambies del plan free al blaze o no se como lo llaman, no te deja
+Puedes solucionarlo entrando a `package.json` y cambiando a `{"node": "8"}` te aparecera
+<br>
+El tiempo de ejecución de Node.js 8 está obsoleto y se dará de baja el 2021-03-15
+<br>
+Pero esto soluciona el problema
 
+### Usar handlebars
+npm install --save engine-handlebars
 
+Esto instalara dos dependencias  engine y handlebars de
+
+Debemos agregar en `index.js`
+
+````javascript
+const engines = require('consolidate');
+
+app.engine('hbs', engines.handlebars);
+app.set('views', './views');//El punto XD
+app.set('view engine', 'hbs');
+````
+
+````javascript
+// Puedes mandar distintos parametros a la vista
+router.get('/', function(req, res, next) {
+  res.render('index',{
+      style: 'home.css',//Con esto yo defino el style
+      title: 'home',//El title del [HEAD]
+  });
+});
+````
 
